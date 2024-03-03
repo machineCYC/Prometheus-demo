@@ -1,0 +1,24 @@
+# 設定 global 全域設定
+# scrape_interval 是多久抓取一次資料
+global:
+    scrape_interval: 5s
+    external_labels:
+      monitor: 'demo-monitor'
+
+# scrape_configs 則是抓取來源，這邊先設定我們 prometheus 本體 server 和 api_monitor
+scrape_configs:
+- job_name: 'prometheus'
+  scrape_interval: 5s
+  scrape_timeout: 3s
+  metrics_path: /metrics
+  static_configs:
+    - targets: ['localhost:9090']
+
+- job_name: 'api_monitor'
+  scrape_interval: 5s
+  scrape_timeout: 5s
+  metrics_path: /metrics
+  params:
+    format: [ prometheus ]
+  static_configs:
+    - targets: ['api:8000']

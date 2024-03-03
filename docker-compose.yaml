@@ -1,0 +1,49 @@
+version: '3.2'
+
+services:
+  api:
+    image: fast_api:v1
+    hostname: fast_api
+    ports:
+      - target: 8000
+        published: 8000
+        mode: host
+    networks:
+      - dev
+
+  prometheus:
+    image: prom/prometheus:v2.1.0
+    volumes:
+      - ./promethus/prometheus.yaml:/etc/prometheus/prometheus.yaml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yaml'
+    ports:
+      - target: 9090
+        published: 9090
+        mode: host
+
+    networks:
+      - dev
+
+  grafana:
+    image: grafana/grafana
+    volumes:
+      - grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=pass
+    depends_on:
+      - prometheus
+    ports:
+      - target: 3000
+        published: 3000
+        mode: host
+    networks:
+      - dev
+
+volumes:
+     prometheus_data: {}
+     grafana_data: {}
+
+networks:
+  dev:
+    external: true
