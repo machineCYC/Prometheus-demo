@@ -11,7 +11,7 @@ Instrumentator().instrument(app).expose(app)
 
 total_requests = Counter('request_count', 'Total webapp request count')
 
-@app.get('/metrics')
+@app.get('/metrics/request_count')
 async def requests_count():
     return prometheus_client.generate_latest(total_requests)
 

@@ -11,3 +11,9 @@
 
 ## shut down api, promethus and grafana
     - make down-api-server
+
+## service url
+    - api: http://127.0.0.1:8000/docs#
+    - promethus: http://127.0.0.1:9090/graph
+    - promethus metrics: http://127.0.0.1:9090/metrics
+    - grafana: http://127.0.0.1:3000/dashboards
