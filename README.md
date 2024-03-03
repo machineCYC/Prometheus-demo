@@ -17,3 +17,7 @@
     - promethus: http://127.0.0.1:9090/graph
     - promethus metrics: http://127.0.0.1:9090/metrics
     - grafana: http://127.0.0.1:3000/dashboards
+    - cadvisor: http://localhost:8080/containers/
+
+## Reference
+    - [cadvisor-metrics-for-prometheus](https://www.metricfire.com/blog/top-10-cadvisor-metrics-for-prometheus/)

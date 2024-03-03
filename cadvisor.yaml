@@ -1,0 +1,36 @@
+version: '3.2'
+
+services:
+  cadvisor:
+    image: google/cadvisor:v0.33.0
+    hostname: "cadvisor-host"
+    command: -logtostderr -docker_only
+    ports:
+      - target: 8080
+        published: 8080
+        mode: host
+    volumes:
+      # 設定 volumes，由於需要監控 container，
+      # 因此需要給予 docker.sock 權限
+      # :ro -> read only，不用擔心 docker 被改寫
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /:/rootfs:ro
+      - /var/run:/var/run
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    # deploy:
+    #   # global，顧名思義，全部機器都會部屬
+    #   mode: global
+    #   resources:
+    #     # 限制使用的資源，不用擔心監控會很耗資源，
+    #     # 最多只要 128 MB 而已
+    #     limits:
+    #       memory: 128M
+    #     reservations:
+    #       memory: 64M
+    networks:
+      - dev
+
+networks:
+  dev:
+    external: true

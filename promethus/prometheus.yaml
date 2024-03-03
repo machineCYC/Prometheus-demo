@@ -5,7 +5,7 @@ global:
     external_labels:
       monitor: 'demo-monitor'
 
-# scrape_configs 則是抓取來源，這邊先設定我們 prometheus 本體 server 和 api_monitor
+# scrape_configs 則是抓取來源
 scrape_configs:
 - job_name: 'prometheus'
   scrape_interval: 5s
@@ -22,3 +22,7 @@ scrape_configs:
     format: [ prometheus ]
   static_configs:
     - targets: ['api:8000']
+
+- job_name: 'cadvisor'
+  static_configs:
+  - targets: ['cadvisor:8080']
